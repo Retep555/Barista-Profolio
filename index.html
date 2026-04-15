@@ -213,42 +213,69 @@
   /* ── GALLERY ── */
   .gallery-section {
     background: var(--espresso);
+    padding-bottom: 80px;
   }
 
-  .gallery-grid {
+ .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: 220px;
-    gap: 8px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 280px;
+    gap: 12px;
+    max-width: 1400px;
+    margin: 40px auto 0;
+    padding: 0 20px;
   }
 
   .gallery-item {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 1;
-    cursor: pointer;
+    background: var(--dark-roast);
+    border: 1px solid rgba(192, 122, 58, 0.1);
   }
 
- .gallery-item img {
+  /* 統一圖片置中處理 */
+  .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-}
+    object-position: center; /* 全置中 */
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.6s ease;
+    filter: brightness(0.9) contrast(1.1); /* 預設略暗以突顯白色奶泡 */
+  }
+
   .gallery-item:hover img {
-    transform: scale(1.06);
-    filter: sepia(5%) brightness(1);
+    transform: scale(1.08);
+    filter: brightness(1.1) contrast(1.2); /* 懸停時增亮強化對比 */
+  }
+
+  /* 置中的主要大圖排版 */
+  .gallery-item.hero-item {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+
+  .gallery-item.tall-item {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+
+  .gallery-item.standard-item {
+    grid-column: span 2;
+    grid-row: span 1;
   }
 
   .gallery-item-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(26,15,7,0.85) 0%, transparent 60%);
+    background: linear-gradient(to top, rgba(26,15,7,0.9) 0%, transparent 50%);
     opacity: 0;
     transition: opacity 0.4s ease;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
     padding: 24px;
+    pointer-events: none;
   }
 
   .gallery-item:hover .gallery-item-overlay {
@@ -256,16 +283,20 @@
   }
 
   .gallery-item-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--cream);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--caramel);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
   }
 
-  .gallery-item.hero-item {
-    grid-column: span 2;
-    grid-row: span 2;
-}
+  .gallery-item-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--cream);
+  }
 
   /* ── SKILLS ── */
   .skills-section {
@@ -557,47 +588,56 @@
 </section>
 
 <!-- GALLERY -->
-<section class="gallery-section" style="padding: 0 0 0 0;">
-  <div style="padding: 80px 80px 40px;">
+<section class="gallery-section">
+  <div style="padding: 0 80px 40px;">
     <div class="section-label">Latte Art Works</div>
     <h2 class="section-heading" style="margin-bottom:0;">拉花作品集</h2>
   </div>
 
-  <div class="gallery-grid" style="margin: 40px 0 0 0;">
+  <div class="gallery-grid">
 
-    <!-- 主圖（Latte3） -->
+    <!-- 主作品 1 -->
     <div class="gallery-item hero-item">
-      <img src="latte3.jpg" alt="Latte art main" style="object-position: 50% 35%;">
+      <img src="latte3.jpg" alt="Latte art main">
       <div class="gallery-item-overlay">
-        <span class="gallery-item-label">Tulip · 鬱金香</span>
+        <span class="gallery-item-label">Featured Work</span>
+        <span class="gallery-item-title">Tulip · 鬱金香</span>
       </div>
     </div>
 
-    <div class="gallery-item">
-     <img src="latte1.jpg" style="object-position: 50% 45%;">
+    <!-- 作品 2 -->
+    <div class="gallery-item standard-item">
+      <img src="latte1.jpg" alt="Latte art 1">
       <div class="gallery-item-overlay">
-        <span class="gallery-item-label">Tulip · 鬱金香</span>
+        <span class="gallery-item-label">Daily Practice</span>
+        <span class="gallery-item-title">Tulip · 鬱金香</span>
       </div>
     </div>
 
-    <div class="gallery-item">
-      <img src="latte2.jpg" style="object-position: 50% 50%;">
+    <!-- 作品 3 -->
+    <div class="gallery-item standard-item">
+      <img src="latte2.jpg" alt="Latte art 2">
       <div class="gallery-item-overlay">
-        <span class="gallery-item-label">Tulip · 鬱金香</span>
+        <span class="gallery-item-label">Daily Practice</span>
+        <span class="gallery-item-title">Tulip · 鬱金香</span>
       </div>
     </div>
 
-    <div class="gallery-item">
-      <img src="latte4.jpg" style="object-position: 50% 55%;">
+    <!-- 作品 4 (次要大圖) -->
+    <div class="gallery-item tall-item">
+      <img src="latte4.jpg" alt="Latte art 4">
       <div class="gallery-item-overlay">
-        <span class="gallery-item-label"Tulip · 鬱金香</span>
+        <span class="gallery-item-label">Featured Work</span>
+        <span class="gallery-item-title">Tulip · 鬱金香</span>
       </div>
     </div>
 
-    <div class="gallery-item">
-      <img src="latte5.jpg" style="object-position: 50% 40%;">
+    <!-- 作品 5 -->
+    <div class="gallery-item standard-item">
+      <img src="latte5.jpg" alt="Latte art 5">
       <div class="gallery-item-overlay">
-        <span class="gallery-item-label">Onion Heart · 洋蔥心</span>
+        <span class="gallery-item-label">Daily Practice</span>
+        <span class="gallery-item-title">Onion Heart · 洋蔥心</span>
       </div>
     </div>
 
