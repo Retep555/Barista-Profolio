@@ -210,18 +210,18 @@
     margin-bottom: 64px;
   }
 
-  /* ── GALLERY ── */
+  /* ── GALLERY 5-IMAGE REDESIGN ── */
   .gallery-section {
     background: var(--espresso);
-    padding-bottom: 80px;
+    padding-bottom: 100px;
   }
 
- .gallery-grid {
+  .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: 280px;
-    gap: 12px;
-    max-width: 1400px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 250px;
+    gap: 15px;
+    max-width: 1200px;
     margin: 40px auto 0;
     padding: 0 20px;
   }
@@ -230,51 +230,61 @@
     position: relative;
     overflow: hidden;
     background: var(--dark-roast);
-    border: 1px solid rgba(192, 122, 58, 0.1);
+    border: 1px solid rgba(192, 122, 58, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
 
-  /* 統一圖片置中處理 */
   .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center; /* 全置中 */
+    object-position: center; /* 作品置中 */
     display: block;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.6s ease;
-    filter: brightness(0.9) contrast(1.1); /* 預設略暗以突顯白色奶泡 */
+    transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), filter 0.5s ease;
+    filter: brightness(0.9) contrast(1.1);
   }
 
   .gallery-item:hover img {
-    transform: scale(1.08);
-    filter: brightness(1.1) contrast(1.2); /* 懸停時增亮強化對比 */
+    transform: scale(1.05);
+    filter: brightness(1.1) contrast(1.15);
   }
 
-  /* 置中的主要大圖排版 */
-  .gallery-item.hero-item {
-    grid-column: span 3;
-    grid-row: span 2;
-  }
-
-  .gallery-item.tall-item {
-    grid-column: span 3;
-    grid-row: span 2;
-  }
-
-  .gallery-item.standard-item {
+  /* 5張圖片的特定佈局 */
+  /* 左側主圖 (Latte 3) */
+  .item-1 {
     grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  /* 右側上兩張 (Latte 1, 2) */
+  .item-2, .item-3 {
+    grid-column: span 1;
     grid-row: span 1;
+  }
+
+  /* 右側下方橫向圖 (Latte 4, 5) */
+  .item-4, .item-5 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  
+  /* 調整排版讓底部平齊 */
+  @media (min-width: 901px) {
+    .item-4, .item-5 {
+        grid-row: span 1;
+    }
   }
 
   .gallery-item-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(26,15,7,0.9) 0%, transparent 50%);
+    background: linear-gradient(to top, rgba(26,15,7,0.9) 0%, transparent 60%);
     opacity: 0;
     transition: opacity 0.4s ease;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 24px;
+    padding: 20px;
     pointer-events: none;
   }
 
@@ -284,16 +294,16 @@
 
   .gallery-item-label {
     font-family: 'Space Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     color: var(--caramel);
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
     margin-bottom: 4px;
   }
 
   .gallery-item-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-style: italic;
     color: var(--cream);
   }
@@ -362,11 +372,6 @@
     font-weight: 300;
   }
 
-  .skills-text strong {
-    color: var(--latte);
-    font-weight: 400;
-  }
-
   /* ── EXPERIENCE ── */
   .experience-section {
     background: rgba(42, 26, 14, 0.6);
@@ -395,11 +400,6 @@
     animation: fadeUp 0.7s forwards;
   }
 
-  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
-  .timeline-item:nth-child(2) { animation-delay: 0.25s; }
-  .timeline-item:nth-child(3) { animation-delay: 0.4s; }
-  .timeline-item:nth-child(4) { animation-delay: 0.55s; }
-
   .timeline-dot {
     position: absolute;
     left: -44px;
@@ -425,21 +425,18 @@
     font-size: 1.4rem;
     font-weight: 400;
     color: var(--foam);
-    margin-bottom: 2px;
   }
 
   .timeline-role {
     font-size: 0.8rem;
     color: rgba(245, 237, 224, 0.45);
     margin-bottom: 12px;
-    font-weight: 300;
   }
 
   .timeline-desc {
     font-size: 0.88rem;
     line-height: 1.8;
     color: rgba(245, 237, 224, 0.6);
-    font-weight: 300;
     max-width: 560px;
   }
 
@@ -447,14 +444,6 @@
   .contact-section {
     background: var(--espresso);
     text-align: center;
-  }
-
-  .contact-section .section-label {
-    justify-content: center;
-  }
-
-  .contact-section .section-label::before {
-    display: none;
   }
 
   .contact-email {
@@ -465,8 +454,8 @@
     color: var(--latte);
     margin-bottom: 16px;
     display: block;
-    transition: color 0.3s;
     text-decoration: none;
+    transition: color 0.3s;
   }
 
   .contact-email:hover { color: var(--foam); }
@@ -479,17 +468,13 @@
     flex-wrap: wrap;
   }
 
-  .contact-item {
-    text-align: center;
-  }
-
   .contact-item-label {
     font-family: 'Space Mono', monospace;
     font-size: 0.6rem;
-    letter-spacing: 0.3em;
     color: rgba(245, 237, 224, 0.35);
     text-transform: uppercase;
     margin-bottom: 6px;
+    letter-spacing: 0.2em;
   }
 
   .contact-item-value {
@@ -521,7 +506,6 @@
     color: rgba(245, 237, 224, 0.25);
   }
 
-  /* ── DIVIDER ── */
   .divider {
     width: 80px;
     height: 1px;
@@ -529,7 +513,6 @@
     margin: 0 auto 64px;
   }
 
-  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -547,8 +530,14 @@
     .hero-left { padding: 80px 40px; }
     section { padding: 80px 40px; }
     .skills-inner { grid-template-columns: 1fr; gap: 40px; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; }
-    .gallery-item.featured { grid-column: span 2; aspect-ratio: 16/9; }
+    
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 250px; }
+    .item-1 { grid-column: span 2; grid-row: span 2; }
+    .item-2, .item-3, .item-4, .item-5 { grid-column: span 1; grid-row: span 1; }
+  }
+
+  @media (max-width: 600px) {
+    .gallery-grid { grid-auto-rows: 200px; gap: 10px; }
     footer { flex-direction: column; gap: 12px; padding: 24px 40px; }
   }
 </style>
@@ -587,7 +576,7 @@
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- GALLERY (5 Images) -->
 <section class="gallery-section">
   <div style="padding: 0 80px 40px;">
     <div class="section-label">Latte Art Works</div>
@@ -596,45 +585,45 @@
 
   <div class="gallery-grid">
 
-    <!-- 主作品 1 -->
-    <div class="gallery-item hero-item">
-      <img src="latte3.jpg" alt="Latte art main">
+    <!-- 主作品 (Latte 3) -->
+    <div class="gallery-item item-1">
+      <img src="latte3.jpg" alt="Tulip">
       <div class="gallery-item-overlay">
-        <span class="gallery-item-label">Featured Work</span>
+        <span class="gallery-item-label">Signature Work</span>
         <span class="gallery-item-title">Tulip · 鬱金香</span>
       </div>
     </div>
 
-    <!-- 作品 2 -->
-    <div class="gallery-item standard-item">
-      <img src="latte1.jpg" alt="Latte art 1">
-      <div class="gallery-item-overlay">
-        <span class="gallery-item-label">Daily Practice</span>
-        <span class="gallery-item-title">Tulip · 鬱金香</span>
-      </div>
-    </div>
-
-    <!-- 作品 3 -->
-    <div class="gallery-item standard-item">
-      <img src="latte2.jpg" alt="Latte art 2">
+    <!-- 作品 2 (Latte 1) -->
+    <div class="gallery-item item-2">
+      <img src="latte1.jpg" alt="Tulip">
       <div class="gallery-item-overlay">
         <span class="gallery-item-label">Daily Practice</span>
         <span class="gallery-item-title">Tulip · 鬱金香</span>
       </div>
     </div>
 
-    <!-- 作品 4 (次要大圖) -->
-    <div class="gallery-item tall-item">
-      <img src="latte4.jpg" alt="Latte art 4">
+    <!-- 作品 3 (Latte 2) -->
+    <div class="gallery-item item-3">
+      <img src="latte2.jpg" alt="Tulip">
       <div class="gallery-item-overlay">
-        <span class="gallery-item-label">Featured Work</span>
+        <span class="gallery-item-label">Daily Practice</span>
         <span class="gallery-item-title">Tulip · 鬱金香</span>
       </div>
     </div>
 
-    <!-- 作品 5 -->
-    <div class="gallery-item standard-item">
-      <img src="latte5.jpg" alt="Latte art 5">
+    <!-- 作品 4 (Latte 4) -->
+    <div class="gallery-item item-4">
+      <img src="latte4.jpg" alt="Tulip">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-label">Daily Practice</span>
+        <span class="gallery-item-title">Tulip · 鬱金香</span>
+      </div>
+    </div>
+
+    <!-- 作品 5 (Latte 5) -->
+    <div class="gallery-item item-5">
+      <img src="latte5.jpg" alt="Onion Heart">
       <div class="gallery-item-overlay">
         <span class="gallery-item-label">Daily Practice</span>
         <span class="gallery-item-title">Onion Heart · 洋蔥心</span>
@@ -654,7 +643,7 @@
         <div class="skill-group-title">吧台技術</div>
         <div class="skill-item">
           <span class="skill-name">義式咖啡萃取與機台校正</span>
-          <div class="skill-bar"><div class="skill-fill" style="--w:0.92; animation-delay:0.1s; width:92%;"></div></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:92%;"></div></div>
         </div>
         <div class="skill-item">
           <span class="skill-name">拉花 Latte Art</span>
@@ -714,21 +703,21 @@
       <div class="timeline-period">2025/07 — 2025/08 · 2個月</div>
       <div class="timeline-company">路易莎職人咖啡</div>
       <div class="timeline-role">儲備幹部 · 桃園中壢</div>
-      <p class="timeline-desc">接受儲備管理幹部訓練，執行備料、飲品製作、POS點單收銀、庫存盤點，培養高流量環境下的穩定應變能力。</p>
+      <p class="timeline-desc">執行備料、輕食製作與飲品製作，確保品質穩定。熟悉大型連鎖品牌 SOP，培養高流量環境下的穩定應變能力。</p>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-period">2024/06 — 2025/04 · 11個月</div>
       <div class="timeline-company">路德斯（Texas Roadhouse）</div>
-      <div class="timeline-role">餐廳外場 → 吧台獨立作業 · 桃園中壢</div>
-      <p class="timeline-desc">三個月內通過SOP培訓升任吧台；單月達成VIP銷售目標，協助轉換6名新會員；支援排班與新人訓練。</p>
+      <div class="timeline-role">吧台獨立作業 · 桃園中壢</div>
+      <p class="timeline-desc">三個月內通過 SOP 培訓升任吧台；單月達成 VIP 銷售目標，協助轉換 6 名新會員；支援排班與新人訓練。</p>
     </div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-period">2022/03 — 2022/11 · 9個月</div>
       <div class="timeline-company">迷客夏</div>
       <div class="timeline-role">門市調飲人員 · 嘉義民雄</div>
-      <p class="timeline-desc">負責飲品製作、點單與顧客互動，學習活動銷售話術，提升客單價與加購率，累積基礎吧台服務經驗。</p>
+      <p class="timeline-desc">負責飲品製作、點單與顧客互動，提升客單價與加購率，累積基礎吧台服務經驗。</p>
     </div>
   </div>
 </section>
@@ -755,10 +744,6 @@
     <div class="contact-item">
       <div class="contact-item-label">學歷</div>
       <div class="contact-item-value">國立中正大學 企管系</div>
-    </div>
-    <div class="contact-item">
-      <div class="contact-item-label">英文</div>
-      <div class="contact-item-value">TOEIC 895</div>
     </div>
   </div>
 </section>
