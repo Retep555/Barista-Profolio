@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>袁晧崴 Peter · 咖啡師作品集</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+TC:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5ede0;
+    --espresso: #2a1a0e;
+    --caramel: #c07a3a;
+    --latte: #d4a47a;
+    --foam: #faf4ec;
+    --dark-roast: #1a0f07;
+    --mid: #6b3d1e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark-roast);
+    color: var(--cream);
+    font-family: 'Noto Serif TC', serif;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(20%) brightness(0.75);
+    transition: transform 8s ease;
+  }
+
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--dark-roast) 0%, transparent 40%);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--foam);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--latte);
+  }
+
+  .hero-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--caramel);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-bio {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: rgba(245, 237, 224, 0.75);
+    max-width: 420px;
+    font-weight: 300;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--caramel);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: rgba(245, 237, 224, 0.5);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 80px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(245, 237, 224, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.4s forwards;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--caramel);
+    opacity: 0.5;
+  }
+
+  /* ── SECTION SHARED ── */
+  section {
+    padding: 120px 80px;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--caramel);
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--foam);
+    margin-bottom: 64px;
+  }
+
+  /* ── GALLERY ── */
+  .gallery-section {
+    background: var(--espresso);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+    cursor: pointer;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(15%) brightness(0.85);
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.06);
+    filter: sepia(5%) brightness(1);
+  }
+
+  .gallery-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(26,15,7,0.85) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+  }
+
+  .gallery-item:hover .gallery-item-overlay {
+    opacity: 1;
+  }
+
+  .gallery-item-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--cream);
+  }
+
+  .gallery-item.featured {
+    grid-column: span 2;
+    aspect-ratio: 2/1;
+  }
+
+  /* ── SKILLS ── */
+  .skills-section {
+    background: var(--dark-roast);
+  }
+
+  .skills-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .skill-group {
+    margin-bottom: 48px;
+  }
+
+  .skill-group-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--caramel);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(192, 122, 58, 0.2);
+  }
+
+  .skill-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .skill-name {
+    font-size: 0.9rem;
+    color: rgba(245, 237, 224, 0.8);
+    font-weight: 300;
+  }
+
+  .skill-bar {
+    width: 120px;
+    height: 2px;
+    background: rgba(192, 122, 58, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--mid), var(--caramel));
+    transform-origin: left;
+    animation: barFill 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    transform: scaleX(0);
+  }
+
+  .skills-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    line-height: 2;
+    color: rgba(245, 237, 224, 0.65);
+    font-weight: 300;
+  }
+
+  .skills-text strong {
+    color: var(--latte);
+    font-weight: 400;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience-section {
+    background: rgba(42, 26, 14, 0.6);
+    backdrop-filter: blur(20px);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--caramel), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.7s forwards;
+  }
+
+  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+  .timeline-item:nth-child(2) { animation-delay: 0.25s; }
+  .timeline-item:nth-child(3) { animation-delay: 0.4s; }
+  .timeline-item:nth-child(4) { animation-delay: 0.55s; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -44px;
+    top: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--caramel);
+    border: 2px solid var(--dark-roast);
+    box-shadow: 0 0 0 1px var(--caramel);
+  }
+
+  .timeline-period {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--caramel);
+    margin-bottom: 6px;
+  }
+
+  .timeline-company {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--foam);
+    margin-bottom: 2px;
+  }
+
+  .timeline-role {
+    font-size: 0.8rem;
+    color: rgba(245, 237, 224, 0.45);
+    margin-bottom: 12px;
+    font-weight: 300;
+  }
+
+  .timeline-desc {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: rgba(245, 237, 224, 0.6);
+    font-weight: 300;
+    max-width: 560px;
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    background: var(--espresso);
+    text-align: center;
+  }
+
+  .contact-section .section-label {
+    justify-content: center;
+  }
+
+  .contact-section .section-label::before {
+    display: none;
+  }
+
+  .contact-email {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--latte);
+    margin-bottom: 16px;
+    display: block;
+    transition: color 0.3s;
+    text-decoration: none;
+  }
+
+  .contact-email:hover { color: var(--foam); }
+
+  .contact-details {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    text-align: center;
+  }
+
+  .contact-item-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(245, 237, 224, 0.35);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .contact-item-value {
+    font-size: 0.9rem;
+    color: rgba(245, 237, 224, 0.75);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 80px;
+    background: var(--dark-roast);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(192, 122, 58, 0.1);
+  }
+
+  footer .logo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--caramel);
+  }
+
+  footer .copy {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: rgba(245, 237, 224, 0.25);
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--caramel), transparent);
+    margin: 0 auto 64px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes barFill {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 80px 40px; }
+    section { padding: 80px 40px; }
+    .skills-inner { grid-template-columns: 1fr; gap: 40px; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item.featured { grid-column: span 2; aspect-ratio: 16/9; }
+    footer { flex-direction: column; gap: 12px; padding: 24px 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-left">
+    <span class="hero-eyebrow">Barista Portfolio · 2025</span>
+    <h1 class="hero-name">袁晧崴<br><em>Peter Yuan</em></h1>
+    <p class="hero-title">Barista · Brand Experience · Operations</p>
+    <p class="hero-bio">
+      具備連鎖餐飲品牌實戰經驗，對咖啡與顧客服務懷抱熱情。
+      善於觀察顧客需求、快速上手工作內容，透過穩定且親切的服務，
+      為每一位來客帶來難忘的杯中體驗。
+    </p>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">3+</span>
+        <span class="stat-label">品牌經歷</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">895</span>
+        <span class="stat-label">TOEIC</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">每日拉花</span>
+      </div>
+    </div>
+    <div class="scroll-hint">SCROLL TO EXPLORE</div>
+  </div>
+  <div class="hero-right">
+    <img src="me2.jpg" alt="個人照">
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" style="padding: 0 0 0 0;">
+  <div style="padding: 80px 80px 40px;">
+    <div class="section-label">Latte Art Works</div>
+    <h2 class="section-heading" style="margin-bottom:0;">拉花作品集</h2>
+  </div>
+  <div class="gallery-grid" style="margin: 40px 0 0 0;">
+    <div class="gallery-item featured">
+      <img src="latte1.jpg" alt="Latte art 1">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-label">Tulip · 鬱金香</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="latte2.jpg" alt="Latte art 2">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-label">Tulip · 鬱金香</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="latte3.jpg" alt="Latte art 3">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-label">Tulip · 鬱金香</span>
+      </div>
+    </div>
+    <div class="gallery-item">
+      <img src="latte4.jpg" alt="Latte art 4">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-label">Tulip · 鬱金香</span>
+      </div>
+    </div>
+    <div class="gallery-item featured">
+      <img src="latte5.jpg" alt="Latte art 5">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-label">Onion Heart · 洋蔥心</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section">
+  <div class="section-label">Craft & Expertise</div>
+  <h2 class="section-heading">技能與專長</h2>
+  <div class="skills-inner">
+    <div>
+      <div class="skill-group">
+        <div class="skill-group-title">吧台技術</div>
+        <div class="skill-item">
+          <span class="skill-name">義式咖啡萃取與機台校正</span>
+          <div class="skill-bar"><div class="skill-fill" style="--w:0.92; animation-delay:0.1s; width:92%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">拉花 Latte Art</span>
+          <div class="skill-bar"><div class="skill-fill" style="width:88%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">手沖咖啡</span>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">甜點製作（巴斯克、提拉米蘇等）</span>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%;"></div></div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">營運管理</div>
+        <div class="skill-item">
+          <span class="skill-name">庫存系統規劃</span>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">SOP 制定與流程優化</span>
+          <div class="skill-bar"><div class="skill-fill" style="width:87%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">POS 系統操作與優化</span>
+          <div class="skill-bar"><div class="skill-fill" style="width:82%;"></div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="skills-text">
+        在 <strong>2Gather 藝起吧</strong> 任職期間，獨立開發 <strong>3 款奶蓋系列</strong>飲品，並主導庫存系統重塑與餐點品質 SOP 優化，解決物料短缺與出餐品質不穩定問題。
+        <br><br>
+        曾於 <strong>路易莎職人咖啡</strong> 接受儲備幹部訓練，在高流量連鎖品牌環境中磨練穩定出杯與快速應變的能力。
+        <br><br>
+        擁有 <strong>TOEIC 895 分</strong>，熟悉英文菜單溝通與跨語境服務場景。期望在品牌咖啡館繼續深耕，朝管理職發展。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience-section">
+  <div class="section-label">Career History</div>
+  <h2 class="section-heading">工作經歷</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2025/11 — 2026/04 · 6個月</div>
+      <div class="timeline-company">2Gather 藝起吧</div>
+      <div class="timeline-role">咖啡師 · 正職 · 桃園中壢</div>
+      <p class="timeline-desc">負責義式機台校正、手沖獨立出杯、甜點量產；獨立研發3款奶蓋飲品；重塑庫存盤點系統；優化POS介面與社群視覺推廣，帶動蛋糕電話預訂業績。</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2025/07 — 2025/08 · 2個月</div>
+      <div class="timeline-company">路易莎職人咖啡</div>
+      <div class="timeline-role">儲備幹部 · 桃園中壢</div>
+      <p class="timeline-desc">接受儲備管理幹部訓練，執行備料、飲品製作、POS點單收銀、庫存盤點，培養高流量環境下的穩定應變能力。</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2024/06 — 2025/04 · 11個月</div>
+      <div class="timeline-company">路德斯（Texas Roadhouse）</div>
+      <div class="timeline-role">餐廳外場 → 吧台獨立作業 · 桃園中壢</div>
+      <p class="timeline-desc">三個月內通過SOP培訓升任吧台；單月達成VIP銷售目標，協助轉換6名新會員；支援排班與新人訓練。</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2022/03 — 2022/11 · 9個月</div>
+      <div class="timeline-company">迷客夏</div>
+      <div class="timeline-role">門市調飲人員 · 嘉義民雄</div>
+      <p class="timeline-desc">負責飲品製作、點單與顧客互動，學習活動銷售話術，提升客單價與加購率，累積基礎吧台服務經驗。</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-heading" style="margin-bottom:16px;">聯絡我</h2>
+  <div class="divider"></div>
+  <a href="mailto:peteryuan08@gmail.com" class="contact-email">peteryuan08@gmail.com</a>
+  <div class="contact-details">
+    <div class="contact-item">
+      <div class="contact-item-label">電話</div>
+      <div class="contact-item-value">0981-766-889</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">Line</div>
+      <div class="contact-item-value">279113</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">地點</div>
+      <div class="contact-item-value">桃園市 · 新北市</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">學歷</div>
+      <div class="contact-item-value">國立中正大學 企管系</div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-item-label">英文</div>
+      <div class="contact-item-value">TOEIC 895</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="logo-text">Peter Yuan · 袁晧崴</span>
+  <span class="copy">Barista Portfolio · 2025</span>
+</footer>
+
+</body>
+</html>
